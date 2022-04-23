@@ -70,7 +70,7 @@ class UserController extends Controller
     public function feed(Request $request): JsonResponse
     {
         $request->validate([
-            'limit' => 'numeric'
+            'limit' => 'numeric|max:20'
         ]);
 
         try {
