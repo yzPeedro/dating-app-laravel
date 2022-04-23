@@ -29,10 +29,7 @@ class AuthRepository implements AuthInterface
             throw new Exception('Wrong credential provided.', 401);
         }
 
-        $this->user->createToken($this->user->email);
-
-        $this->tokens = !is_array($this->user->tokens) ?
-            [$this->user->tokens] : $this->user->tokens;
+        $this->tokens[] = $this->user->createToken($data['email'])->plainTextToken;
 
         return $this;
     }
@@ -73,12 +70,9 @@ class AuthRepository implements AuthInterface
             throw new Exception('Internal Server Error.', 500);
         }
 
-        $user->createToken($user->email);
 
         $this->user = $user;
-        $this->tokens = !is_array($this->user->tokens) ?
-            [$this->user->tokens] : $this->user->tokens;
-
+        $this->tokens[] = $user->createToken($user->email)->plainTextToken;
         return $this;
     }
 

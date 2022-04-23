@@ -31,7 +31,8 @@ class AuthController extends Controller
                'data' => [
                    'message' => 'User validated with success!',
                    'status' => 'authorized',
-                   'user' => $response->user
+                   'user' => $response->user,
+                   'tokens' => $response->tokens
                ]
             ]);
         } catch (Exception $ex) {
@@ -66,7 +67,8 @@ class AuthController extends Controller
                 'data' => [
                     'message' => 'User registered with success!',
                     'status' => 'authorized',
-                    'user' => $response->user
+                    'user' => $response->user,
+                    'tokens' => $response->tokens
                 ]
             ]);
         } catch (Exception $ex) {
