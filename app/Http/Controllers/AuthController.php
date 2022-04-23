@@ -59,6 +59,7 @@ class AuthController extends Controller
             'locale' => 'required',
             'sex' => 'required',
             'sex_interest' => 'required',
+            'interests' => 'array|max:5'
         ]);
 
         try {

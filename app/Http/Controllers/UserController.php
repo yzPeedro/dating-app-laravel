@@ -44,6 +44,10 @@ class UserController extends Controller
 
     public function update(Request $request): JsonResponse
     {
+        $request->validate([
+            'interests' => 'array|max:5'
+        ]);
+
         try {
             $response = $this->repository->update($request->all());
             return response()->json([

@@ -50,7 +50,6 @@ class UserRepository implements UserInterface
         $user = auth()->user();
 
         // TODO: add locale proximity parameter
-        // TODO: add limit of interests
 
         if($user->sex_interest == 'all') {
             $this->feed = User::where('interests', 'like', "%$user->interests%")
