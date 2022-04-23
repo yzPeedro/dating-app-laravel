@@ -9,4 +9,6 @@ interface UserInterface
     public function me(Request $request): UserRepository;
 
     public function update(array $data): UserRepository;
+
+    public function feed(int $limit): UserRepository;
 }

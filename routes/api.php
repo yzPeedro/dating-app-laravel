@@ -23,5 +23,6 @@ Route::prefix('auth')->group(function(){
 
 Route::prefix('user')->middleware(['auth:sanctum'])->group(function(){
     Route::get('/me', [UserController::class, 'me']);
-    Route::post('/update', [UserController::class, 'update']);
+    Route::get('/feed', [UserController::class, 'feed']);
+    Route::put('/update', [UserController::class, 'update']);
 });

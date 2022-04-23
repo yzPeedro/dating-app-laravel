@@ -66,4 +66,33 @@ class UserController extends Controller
             ], $ex->getCode());
         }
     }
+
+    public function feed(Request $request): JsonResponse
+    {
+        $request->validate([
+            'limit' => 'numeric'
+        ]);
+
+        try {
+            $response = $this->repository->feed($request->input('limit') ?? 10);
+            return response()->json([
+                'status' => 'success',
+                'error' => false,
+                'data' => [
+                    'message' => 'Feed list.',
+                    'feed' => $response->feed
+                ]
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'error' => true,
+                'data' => [
+                    'message' => $ex->getMessage(),
+                    'code' => $ex->getCode(),
+                    'status' => 'unauthorized'
+                ]
+            ], $ex->getCode());
+        }
+    }
 }
