@@ -46,4 +46,40 @@ class AuthController extends Controller
             ], $ex->getCode());
         }
     }
+
+    public function register(Request $request): JsonResponse
+    {
+        $request->validate([
+            'name' => 'required',
+            'age' => 'required|numeric',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
+            'phone' => 'required',
+            'locale' => 'required',
+        ]);
+
+        try {
+            $response = $this->repository->register($request->all());
+            return response()->json([
+                'status' => 'success',
+                'error' => false,
+                'data' => [
+                    'message' => 'User registered with success!',
+                    'status' => 'authorized',
+                    'user' => $response->user
+                ]
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'error' => true,
+                'data' => [
+                    'message' => $ex->getMessage(),
+                    'code' => $ex->getCode(),
+                    'status' => 'Register failed.'
+                ]
+            ], $ex->getCode());
+        }
+    }
+
 }

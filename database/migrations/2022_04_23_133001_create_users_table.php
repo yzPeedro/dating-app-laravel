@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->text('bio')->nullable();
             $table->string('interests')->nullable();
             $table->string('locale');
+            $table->string('phone');
             $table->timestamps();
         });
     }

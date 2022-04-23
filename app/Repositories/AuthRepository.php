@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Psy\Util\Str;
 
 class AuthRepository implements AuthInterface
 {
@@ -57,4 +58,28 @@ class AuthRepository implements AuthInterface
 
         return true;
     }
+
+    /**
+     * @throws Exception
+     */
+    public function register(array $data): AuthRepository
+    {
+        $data['id'] = Str::uuid();
+        $data['password'] = Hash::make($data['password']);
+
+        $user = User::create($data);
+
+        if(! $user) {
+            throw new Exception('Internal Server Error.', 500);
+        }
+
+        $user->createToken($user->createToken);
+
+        $this->user = $user;
+        $this->tokens = !is_array($this->user->tokens) ?
+            [$this->user->tokens] : $this->user->tokens;
+
+        return $this;
+    }
+
 }

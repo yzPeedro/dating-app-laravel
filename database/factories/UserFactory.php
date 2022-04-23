@@ -26,7 +26,8 @@ class UserFactory extends Factory
             'password' => Hash::make('12345678'),
             'bio' => $this->faker->text,
             'interests' => implode(',', ['games', 'sports', 'programming']),
-            'locale' => $this->faker->country
+            'locale' => $this->faker->country,
+            'phone' => $this->faker->phoneNumber
         ];
     }
 }
