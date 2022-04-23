@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('interests')->nullable();
             $table->string('locale');
             $table->string('phone');
+            $table->string('sex');
+            $table->string('sex_interest');
             $table->timestamps();
         });
     }

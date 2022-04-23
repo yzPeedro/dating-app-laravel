@@ -69,6 +69,8 @@ class AuthControllerTest extends TestCase
             'password',
             'phone',
             'locale',
+            'sex',
+            'sex_interest',
         ];
 
         $request = $this->post('/api/auth/register', $payload);
@@ -88,6 +90,8 @@ class AuthControllerTest extends TestCase
             'password_confirmation' => '1234',
             'phone' => $faker->phoneNumber,
             'locale' => $faker->country,
+            'sex' => 'male',
+            'sex_interest' => 'male',
         ];
 
         $request = $this->post('/api/auth/register', $user);

@@ -27,7 +27,9 @@ class UserFactory extends Factory
             'bio' => $this->faker->text,
             'interests' => implode(',', ['games', 'sports', 'programming']),
             'locale' => $this->faker->country,
-            'phone' => $this->faker->phoneNumber
+            'phone' => $this->faker->phoneNumber,
+            'sex' => 'male',
+            'sex_interest' => 'male'
         ];
     }
 }
