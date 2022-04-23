@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('sex');
             $table->string('sex_interest');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

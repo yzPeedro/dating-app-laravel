@@ -51,12 +51,12 @@ class UserRepository implements UserInterface
 
         // TODO: add locale proximity parameter
         // TODO: add limit of interests
-        // TODO: disable profile feature
 
         if($user->sex_interest == 'all') {
             $this->feed = User::where('interests', 'like', "%$user->interests%")
                 ->where('sex_interest', $user->sex)
                 ->where('id', '<>', $user->id)
+                ->where('active', true)
                 ->limit($limit)
                 ->get();
         }
@@ -66,6 +66,7 @@ class UserRepository implements UserInterface
                 ->where('sex_interest', 'all')
                 ->orWhere('sex_interest', $user->sex)
                 ->where('id', '<>', $user->id)
+                ->where('active', true)
                 ->limit($limit)
                 ->get();
         }

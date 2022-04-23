@@ -32,7 +32,8 @@ class UserFactory extends Factory
             'locale' => $this->faker->country,
             'phone' => $this->faker->phoneNumber,
             'sex' => $sex[array_rand($sex)],
-            'sex_interest' => $sex_interest[array_rand($sex_interest)]
+            'sex_interest' => $sex_interest[array_rand($sex_interest)],
+            'active' => $this->faker->boolean
         ];
     }
 }
