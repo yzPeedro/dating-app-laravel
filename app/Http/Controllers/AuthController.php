@@ -57,6 +57,8 @@ class AuthController extends Controller
             'password' => 'required|confirmed',
             'phone' => 'required',
             'locale' => 'required',
+            'sex' => 'required',
+            'sex_interest' => 'required',
         ]);
 
         try {

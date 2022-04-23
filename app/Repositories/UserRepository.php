@@ -49,10 +49,22 @@ class UserRepository implements UserInterface
     {
         $user = auth()->user();
 
-        $this->feed = User::where('interests', 'like', "%$user->interests%")
-            ->where('id', '<>', $user->id)
-            ->limit($limit)
-            ->get();
+        if($user->sex_interest == 'all') {
+            $this->feed = User::where('interests', 'like', "%$user->interests%")
+                ->where('sex_interest', $user->sex)
+                ->where('id', '<>', $user->id)
+                ->limit($limit)
+                ->get();
+        }
+
+        if($user->sex_interest == 'female' || $user->sex_interest == 'male') {
+            $this->feed = User::where('interests', 'like', "%$user->interests%")
+                ->where('sex_interest', $user->sex)
+                ->where('sex_interest', 'all')
+                ->where('id', '<>', $user->id)
+                ->limit($limit)
+                ->get();
+        }
 
         return $this;
     }
