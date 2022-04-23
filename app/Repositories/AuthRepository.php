@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
-use Psy\Util\Str;
+use Illuminate\Support\Str;
 
 class AuthRepository implements AuthInterface
 {
@@ -73,7 +73,7 @@ class AuthRepository implements AuthInterface
             throw new Exception('Internal Server Error.', 500);
         }
 
-        $user->createToken($user->createToken);
+        $user->createToken($user->email);
 
         $this->user = $user;
         $this->tokens = !is_array($this->user->tokens) ?
