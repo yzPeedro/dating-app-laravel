@@ -16,7 +16,7 @@ class UserRepository implements UserInterface
 {
     public Authenticatable $user;
 
-    public Collection $feed;
+    public array $feed;
 
     /**
      * @throws Exception
@@ -48,30 +48,7 @@ class UserRepository implements UserInterface
 
     public function feed(int $limit): UserRepository
     {
-        $user = auth()->user();
-
-        // TODO: add locale proximity parameter
-        // TODO: add likes, matchs and messages
-
-        if($user->sex_interest == 'all') {
-            $this->feed = User::where('interests', 'like', "%$user->interests%")
-                ->where('sex_interest', $user->sex)
-                ->where('id', '<>', $user->id)
-                ->where('active', true)
-                ->limit($limit)
-                ->get();
-        }
-
-        if($user->sex_interest == 'female' || $user->sex_interest == 'male') {
-            $this->feed = User::where('interests', 'like', "%$user->interests%")
-                ->where('sex_interest', 'all')
-                ->orWhere('sex_interest', $user->sex)
-                ->where('id', '<>', $user->id)
-                ->where('active', true)
-                ->limit($limit)
-                ->get();
-        }
-
+        $this->feed = auth()->user()->feed($limit);
         return $this;
     }
 

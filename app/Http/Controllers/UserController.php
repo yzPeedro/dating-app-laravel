@@ -84,6 +84,7 @@ class UserController extends Controller
                 'error' => false,
                 'data' => [
                     'message' => 'Feed list.',
+                    'count' => count($response->feed[0]),
                     'feed' => $response->feed
                 ]
             ]);
@@ -138,6 +139,7 @@ class UserController extends Controller
                 'error' => false,
                 'data' => [
                     'message' => 'Matches list.',
+                    'count' => count($matches[0]),
                     'matches' => $matches
                 ]
             ]);
