@@ -13,4 +13,6 @@ interface UserInterface
     public function feed(int $limit): UserRepository;
 
     public function match(array $data): bool;
+
+    public function matches(): array;
 }

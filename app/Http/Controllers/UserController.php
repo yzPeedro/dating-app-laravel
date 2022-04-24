@@ -94,13 +94,13 @@ class UserController extends Controller
                 'data' => [
                     'message' => $ex->getMessage(),
                     'code' => $ex->getCode(),
-                    'status' => 'unauthorized'
+                    'status' => 'error'
                 ]
             ], $ex->getCode());
         }
     }
 
-    public function like(Request $request)
+    public function like(Request $request): JsonResponse
     {
         $request->validate([
            'liked_id' => 'required|uuid'
@@ -123,7 +123,32 @@ class UserController extends Controller
                 'data' => [
                     'message' => $ex->getMessage(),
                     'code' => $ex->getCode(),
-                    'status' => 'unauthorized'
+                    'status' => 'error'
+                ]
+            ], $ex->getCode());
+        }
+    }
+
+    public function matches(): JsonResponse
+    {
+        try {
+            $matches = $this->repository->matches();
+            return response()->json([
+                'status' => 'success',
+                'error' => false,
+                'data' => [
+                    'message' => 'Matches list.',
+                    'matches' => $matches
+                ]
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'error' => true,
+                'data' => [
+                    'message' => $ex->getMessage(),
+                    'code' => $ex->getCode(),
+                    'status' => 'error'
                 ]
             ], $ex->getCode());
         }

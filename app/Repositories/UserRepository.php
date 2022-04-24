@@ -96,10 +96,44 @@ class UserRepository implements UserInterface
                 ]);
         }
 
-        if(! $userLiked->liked()->where('liked_id', $userLikes->id)->first()) {
+        if(! $likes = $userLiked->liked()->where('liked_id', $userLikes->id)->first()) {
             return false;
         }
 
+        $likes->update(['match' => true]);
+
+        $userLikes->liked()
+            ->where('liked_id', $userLiked->id)
+            ->update(['match' => true]);
+
         return true;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function matches(): array
+    {
+        $matches = [];
+        $user = auth()->user();
+
+        try {
+            $founded = $user->liked()
+                ->where('match', true)
+                ->where('liked_id', '<>', $user->id)
+                ->get();
+
+            if(! $founded) {
+                return [];
+            }
+
+            foreach($founded as $item) {
+                $matches[] = User::find($item->liked_id);
+            }
+
+            return $matches;
+        } catch (Exception $ex) {
+            throw new Exception('Internal Server Error.', 500);
+        }
     }
 }

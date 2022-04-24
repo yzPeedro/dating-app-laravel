@@ -12,6 +12,6 @@ class Match extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'id', 'likes_id', 'liked_id'
+        'id', 'likes_id', 'liked_id', 'match'
     ];
 }

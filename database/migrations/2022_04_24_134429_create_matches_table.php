@@ -17,6 +17,7 @@ class CreateMatchesTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('likes_id');
             $table->uuid('liked_id');
+            $table->boolean('match')->default(false);
             $table->timestamps();
         });
     }
