@@ -137,4 +137,16 @@ class UserRepository implements UserInterface
             throw new Exception('Internal Server Error.', 500);
         }
     }
+
+    /**
+     * @throws Exception
+     */
+    public function getUser(string $id): User
+    {
+        if(! User::find($id)) {
+            throw new Exception('User not found', 400);
+        }
+
+        return User::find($id);
+    }
 }

@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * TODO: improve feed proximity by locale
+ * TODO: add message system
+*/
+
 Route::prefix('auth')->group(function(){
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -28,4 +33,5 @@ Route::prefix('user')->middleware(['auth:sanctum'])->group(function(){
     Route::post('/like', [UserController::class, 'like']);
     Route::get('/matches', [UserController::class, 'matches']);
     Route::delete('/unmatch', [UserController::class, 'unmatch']);
+    Route::get('/get', [UserController::class, 'get']);
 });

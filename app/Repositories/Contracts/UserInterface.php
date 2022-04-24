@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Repositories\Contracts;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 interface UserInterface
 {
@@ -17,4 +19,6 @@ interface UserInterface
     public function matches(): array;
 
     public function unmatch(string $liked_id): void;
+
+    public function getUser(string $id): User;
 }

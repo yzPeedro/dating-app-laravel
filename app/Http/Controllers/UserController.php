@@ -184,4 +184,33 @@ class UserController extends Controller
             ], $ex->getCode());
         }
     }
+
+    public function get(Request $request): JsonResponse
+    {
+        $request->validate([
+            'user_id' => 'required|uuid'
+        ]);
+
+        try {
+            $user = $this->repository->getUser($request->input('user_id'));
+            return response()->json([
+                'status' => 'success',
+                'error' => false,
+                'data' => [
+                    'message' => 'User founded!',
+                    'user' => $user
+                ]
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'error' => true,
+                'data' => [
+                    'message' => $ex->getMessage(),
+                    'code' => $ex->getCode(),
+                    'status' => 'error'
+                ]
+            ], $ex->getCode());
+        }
+    }
 }
