@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 
 class UserRepository implements UserInterface
@@ -50,6 +51,7 @@ class UserRepository implements UserInterface
         $user = auth()->user();
 
         // TODO: add locale proximity parameter
+        // TODO: add likes, matchs and messages
 
         if($user->sex_interest == 'all') {
             $this->feed = User::where('interests', 'like', "%$user->interests%")
@@ -71,5 +73,33 @@ class UserRepository implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function match(array $data): bool
+    {
+        $userLiked = User::find($data['liked_id']);
+        $userLikes = auth()->user();
+
+        if(! $userLiked) {
+            throw new Exception('User id not found', 400);
+        }
+
+        if(! $userLikes->liked()->where('liked_id', $userLiked->id)->first()) {
+            $userLikes->liked()
+                ->create([
+                    'id' => Str::uuid(),
+                    'liked_id' => $userLiked->id,
+                    'likes_id' => $userLikes->id
+                ]);
+        }
+
+        if(! $userLiked->liked()->where('liked_id', $userLikes->id)->first()) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -99,4 +99,33 @@ class UserController extends Controller
             ], $ex->getCode());
         }
     }
+
+    public function like(Request $request)
+    {
+        $request->validate([
+           'liked_id' => 'required|uuid'
+        ]);
+
+        try {
+            $match = $this->repository->match($request->all());
+            return response()->json([
+                'status' => 'success',
+                'error' => false,
+                'data' => [
+                    'message' => 'Like successfully!.',
+                    'is_match' => $match
+                ]
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'error' => true,
+                'data' => [
+                    'message' => $ex->getMessage(),
+                    'code' => $ex->getCode(),
+                    'status' => 'unauthorized'
+                ]
+            ], $ex->getCode());
+        }
+    }
 }

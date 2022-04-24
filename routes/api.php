@@ -25,4 +25,5 @@ Route::prefix('user')->middleware(['auth:sanctum'])->group(function(){
     Route::get('/me', [UserController::class, 'me']);
     Route::get('/feed', [UserController::class, 'feed']);
     Route::put('/update', [UserController::class, 'update']);
+    Route::post('/like', [UserController::class, 'like']);
 });
