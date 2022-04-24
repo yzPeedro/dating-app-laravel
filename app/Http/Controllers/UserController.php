@@ -84,7 +84,7 @@ class UserController extends Controller
                 'error' => false,
                 'data' => [
                     'message' => 'Feed list.',
-                    'count' => count($response->feed[0]),
+                    'count' => !empty($response->feed) ? count($response->feed) : 0,
                     'feed' => $response->feed
                 ]
             ]);
@@ -139,8 +139,37 @@ class UserController extends Controller
                 'error' => false,
                 'data' => [
                     'message' => 'Matches list.',
-                    'count' => count($matches[0]),
+                    'count' => !empty($matches) ? count($matches) : 0,
                     'matches' => $matches
+                ]
+            ]);
+        } catch (Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'error' => true,
+                'data' => [
+                    'message' => $ex->getMessage(),
+                    'code' => $ex->getCode(),
+                    'status' => 'error'
+                ]
+            ], $ex->getCode());
+        }
+    }
+
+    public function unmatch(Request $request): JsonResponse
+    {
+        $request->validate([
+            'liked_id' => 'required|uuid'
+        ]);
+
+        try {
+            $this->repository->unmatch($request->input('liked_id'));
+            return response()->json([
+                'status' => 'success',
+                'error' => false,
+                'data' => [
+                    'message' => 'Matches list.',
+                    'status' => 'Unmatch successfully'
                 ]
             ]);
         } catch (Exception $ex) {

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Match;
 use App\Models\User;
 use App\Repositories\Contracts\UserInterface;
 use Exception;
@@ -110,6 +111,29 @@ class UserRepository implements UserInterface
 
             return $matches;
         } catch (Exception $ex) {
+            throw new Exception('Internal Server Error.', 500);
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function unmatch(string $liked_id): void
+    {
+        try {
+            $user = auth()->user();
+
+            Match::where('liked_id', $user->id)
+                ->where('likes_id', $liked_id)
+                ->where('match', true)
+                ->delete();
+
+            Match::where('liked_id', $liked_id)
+                ->where('likes_id', $user->id)
+                ->where('match', true)
+                ->delete();
+
+        } catch (Exception $exception) {
             throw new Exception('Internal Server Error.', 500);
         }
     }

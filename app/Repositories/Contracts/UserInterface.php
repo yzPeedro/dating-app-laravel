@@ -15,4 +15,6 @@ interface UserInterface
     public function match(array $data): bool;
 
     public function matches(): array;
+
+    public function unmatch(string $liked_id): void;
 }

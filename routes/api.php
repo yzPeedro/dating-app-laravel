@@ -27,4 +27,5 @@ Route::prefix('user')->middleware(['auth:sanctum'])->group(function(){
     Route::put('/update', [UserController::class, 'update']);
     Route::post('/like', [UserController::class, 'like']);
     Route::get('/matches', [UserController::class, 'matches']);
+    Route::delete('/unmatch', [UserController::class, 'unmatch']);
 });
