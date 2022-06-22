@@ -26,7 +26,7 @@ class User extends Authenticatable
     public function liked(): HasMany
     {
         // likes given
-        return $this->hasMany(Match::class, 'likes_id', 'id');
+        return $this->hasMany(Connect::class, 'likes_id', 'id');
     }
 
     public function feed(int $limit): array

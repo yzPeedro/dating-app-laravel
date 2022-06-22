@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Match;
+use App\Models\Connect;
 use App\Models\User;
 use App\Repositories\Contracts\UserInterface;
 use Exception;
@@ -123,12 +123,12 @@ class UserRepository implements UserInterface
         try {
             $user = auth()->user();
 
-            Match::where('liked_id', $user->id)
+            Connect::where('liked_id', $user->id)
                 ->where('likes_id', $liked_id)
                 ->where('match', true)
                 ->delete();
 
-            Match::where('liked_id', $liked_id)
+            Connect::where('liked_id', $liked_id)
                 ->where('likes_id', $user->id)
                 ->where('match', true)
                 ->delete();
