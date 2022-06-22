@@ -84,8 +84,10 @@ class UserController extends Controller
                 'error' => false,
                 'data' => [
                     'message' => 'Feed list.',
-                    'count' => !empty($response->feed) ? count($response->feed) : 0,
-                    'feed' => $response->feed
+                    'count' => count($response->feed[0]),
+                    'feed' => [
+                        'users' => $response->feed[0]
+                    ]
                 ]
             ]);
         } catch (Exception $ex) {
